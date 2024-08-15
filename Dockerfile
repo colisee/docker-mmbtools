@@ -1,5 +1,5 @@
 # BUILDER IMAGE
-FROM jgoerzen/debian-base-minimal:bullseye AS builder
+FROM jgoerzen/debian-base-minimal:bookworm AS builder
 ARG  build_branch=master
 ENV  DEBIAN_FRONTEND=noninteractive
 
@@ -20,7 +20,7 @@ RUN apt-get install --yes git ;\
 
 
 # FINAL IMAGE
-FROM jgoerzen/debian-base-minimal:bullseye
+FROM jgoerzen/debian-base-minimal:bookworm
 ENV  DEBIAN_FRONTEND=noninteractive
 
 ## Update OS
