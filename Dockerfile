@@ -23,12 +23,15 @@ RUN apt-get install --yes git ;\
 FROM jgoerzen/debian-base-minimal:bookworm
 ENV  DEBIAN_FRONTEND=noninteractive
 
-## Update OS
-RUN apt-get update ;\
-    apt-get upgrade --yes
+## Copy objects built in the builder phase
+COPY --from=builder /usr/local/bin/* /usr/local/bin/
+COPY --from=builder --chown=odr:odr /home/odr /home/odr
+COPY --from=builder /etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 
-## Install production libraries
-RUN apt-get install --yes \
+RUN ln -s /home/odr/config/supervisor/*.conf /etc/supervisor/conf.d/ ;\
+    apt-get update ;\
+    apt-get upgrade --yes ;\
+    apt-get install --yes \
       gstreamer1.0-plugins-good \
       libasound2 \
       libmagickwand-6.q16-dev \
@@ -52,21 +55,11 @@ RUN apt-get install --yes \
       python3-zmq \
       python3-yaml \
       supervisor ;\
-    rm -rf /var/lib/apt/lists/*
-
-## Add user odr
-RUN useradd \
-     --create-home \
-     --groups dialout,audio \
-     odr
-
-## Copy objects built in the builder phase
-COPY --from=builder /usr/local/bin/* /usr/local/bin/
-COPY --from=builder --chown=odr:odr /home/odr /home/odr
-COPY --from=builder /etc/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
-
-## Link the sample supervisor configuration files
-RUN ln -s /home/odr/config/supervisor/*.conf /etc/supervisor/conf.d/
+    rm -rf /var/lib/apt/lists/* ;\
+    useradd \
+      --create-home \
+      --groups dialout,audio \
+      odr ;\
 
 ## Expose ports
 EXPOSE 8001-8003
