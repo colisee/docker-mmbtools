@@ -59,7 +59,7 @@ RUN ln -s /home/odr/config/supervisor/*.conf /etc/supervisor/conf.d/ ;\
     useradd \
       --create-home \
       --groups dialout,audio \
-      odr ;\
+      odr
 
 ## Expose ports
 EXPOSE 8001-8003
