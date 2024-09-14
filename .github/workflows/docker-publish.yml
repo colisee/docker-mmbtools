@@ -31,8 +31,7 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
           build-args: build_branch=master
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mmbtools:master,
-                ${{ secrets.DOCKERHUB_USERNAME }}/mmbtools:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mmbtools:master
       -
         name: Build and push next
         uses: docker/build-push-action@v6

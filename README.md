@@ -29,8 +29,9 @@ docker run \
 	--tmpfs /run:size=100M \
 	--tmpfs /run/lock:size=100M \
 	--cgroupns=host \
-opendigitalradio/mmbtools
+opendigitalradio/mmbtools:master
 ```
+You can also use the `opendigitalradio/mmbtools:next` image if you wish so.
 
 If you have a USB transceiver and if you intend to broadcast, then you should:
 - Plug your USB transceiver
